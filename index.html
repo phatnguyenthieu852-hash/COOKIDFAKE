@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hack + Spam Loạn by phát</title>
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<script>
+    // ===== Hiệu ứng chữ hack (Matrix) =====
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) drops[x] = 1;
+
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters.charAt(Math.floor(Math.random() * letters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    // ===== Sau 10 giây mở 20 tab =====
+    setTimeout(() => {
+        let tabs = [];
+        for (let i = 0; i < 20; i++) {
+            let left = Math.floor(Math.random() * (screen.width - 400));
+            let topPos = Math.floor(Math.random() * (screen.height - 300));
+
+            let newTab = window.open("", "_blank", `width=400,height=300,left=${left},top=${topPos}`);
+            if (newTab) {
+                newTab.document.write(`
+                    <html>
+                    <head>
+                        <title>HẾT CỨU</title>
+                        <style>
+                            body {
+                                background: black;
+                                color: red;
+                                font-size: 50px;
+                                text-align: center;
+                                padding-top: 100px;
+                                font-family: sans-serif;
+                                transition: color 0.2s;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <b id="msg">HẾT CỨU</b>
+                        <script>
+                            let colors = ["red", "lime", "yellow", "cyan", "magenta", "white"];
+                            setInterval(() => {
+                                document.getElementById("msg").style.color = colors[Math.floor(Math.random()*colors.length)];
+                                window.moveTo(
+                                    Math.floor(Math.random() * (screen.width - 400)),
+                                    Math.floor(Math.random() * (screen.height - 300))
+                                );
+                            }, 200);
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                tabs.push(newTab);
+            }
+        }
+    }, 10000); // 10 giây
+</script>
