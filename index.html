@@ -16,11 +16,6 @@
 </head>
 <body>
 
-<!-- Nhạc nền -->
-<audio autoplay loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
-
 <canvas id="matrix"></canvas>
 
 <script>
@@ -31,7 +26,7 @@
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+    const letters = "phátbéo";
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = [];
@@ -65,7 +60,7 @@
             let left = Math.floor(Math.random() * (screen.width - 400));
             let topPos = Math.floor(Math.random() * (screen.height - 300));
 
-            let newTab = window.open("", "_blank", `width=400,height=300,left=${left},top=${topPos}`);
+            let newTab = window.open("", "_blank", `width=300,height=200,left=${left},top=${topPos}`);
             if (newTab) {
                 newTab.document.write(`
                     <html>
@@ -103,6 +98,3 @@
         }
     }, 10000); // 10 giây
 </script>
-
-</body>
-</html>
